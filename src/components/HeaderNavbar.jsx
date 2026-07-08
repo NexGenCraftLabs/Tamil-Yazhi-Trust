@@ -3,6 +3,7 @@ import { Container, Row, Col, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
 import { GeoAltFill, TelephoneFill } from 'react-bootstrap-icons';
 import './HeaderNavbar.css';
+import headerNav from "../assets/logo.png";
 
 function HeaderNavbar() {
   return (
@@ -25,7 +26,7 @@ function HeaderNavbar() {
             <Col md={4} lg={6} className="text-center">
               <div className="d-flex align-items-center justify-content-center flex-column flex-sm-row">
                 <img 
-                  src="/src/assets/logo.png" 
+                  src={headerNav} 
                   alt="Tamil Yazhi Trust Logo" 
                   className="me-sm-3 mb-2 mb-sm-0"
                   style={{ width: '80px', height: '80px', borderRadius: '50%' }}
