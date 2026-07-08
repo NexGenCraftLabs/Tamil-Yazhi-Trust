@@ -1,0 +1,117 @@
+
+.about-page {
+  background-color: #d8af1c;
+  color: #331A00;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+
+.about-hero-section {
+  background: radial-gradient(circle at 80% 20%, #500608 0%, #2B0504 100%);
+  color: #ffffff;
+  padding: 60px 0 120px 0;
+  position: relative;
+  
+  clip-path: ellipse(110% 100% at 46% 0%);
+}
+
+.about-main-title {
+  font-family: 'Georgia', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #2B0504; 
+}
+
+.about-subtitle-gold {
+  color: #EBB01D;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+
+.vision-card-custom {
+  background: linear-gradient(rgba(255, 253, 246, 0.92), rgba(255, 253, 246, 0.92)), 
+              url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=500') center/cover;
+  border: 1.5px solid #F2D07E !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 25px rgba(43, 5, 4, 0.06);
+}
+
+.mission-card-custom {
+  background-color: #FFFFFF;
+  border: 1.5px solid #F2D07E !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 25px rgba(43, 5, 4, 0.06);
+}
+
+.vm-title {
+  font-family: 'Georgia', serif;
+  color: #2B0504;
+  font-weight: bold;
+}
+
+
+.values-section-title {
+  font-family: 'Georgia', serif;
+  color: #2B0504;
+  font-weight: 800;
+}
+
+.value-icon-circle {
+  width: 75px;
+  height: 75px;
+  border: 2px solid #EBB01D;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  color: #2B0504;
+  font-size: 1.8rem;
+  margin: 0 auto 15px auto;
+  box-shadow: 0 5px 15px rgba(233, 176, 29, 0.2);
+}
+
+
+.founder-section {
+  background: radial-gradient(circle at 20% 80%, #500608 0%, #2B0504 100%);
+  color: #ffffff;
+  padding: 100px 0 60px 0;
+  margin-top: 80px;
+  clip-path: ellipse(120% 100% at 50% 100%);
+}
+
+.founder-img-frame {
+  border: 6px solid #EBB01D;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: transparent;
+  display: inline-block;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.founder-img-frame img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 280px;
+  height: 280px;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif, Georgia, 'Times New Roman', Times, serif;
+}
+
+.italic-quote {
+  font-family: 'Georgia', serif;
+  color: #f7e7c4 !important;
+}
+
+.leaders-section .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leaders-section .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(223, 177, 91, 0.3) !important;
+}

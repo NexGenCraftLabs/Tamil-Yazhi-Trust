@@ -1,0 +1,67 @@
+
+:root {
+  --trust-gold-bg: #F9D043;      
+  --trust-dark-maroon: #2B0504;  
+  --trust-text-dark: #331A00;    
+  --trust-gold-text: #F9D043;    
+}
+
+
+.top-header {
+  background-color: var(--trust-gold-bg);
+  color: var(--trust-text-dark);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.trust-title-ta {
+  font-family: 'Tamil', sans-serif;
+  font-weight: 800;
+  color: var(--trust-text-dark);
+}
+
+.trust-title-en {
+  font-family: 'serif';
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--trust-text-dark);
+}
+
+.reg-badge {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+
+.custom-navbar {
+  background-color: var(--trust-dark-maroon) !important;
+  padding: 0;
+}
+
+.custom-navbar .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  padding: 15px 20px !important;
+  transition: all 0.3s ease;
+}
+
+
+.nav-link.active-home {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--trust-gold-text) !important;
+}
+
+.custom-navbar .nav-link:hover {
+  color: var(--trust-gold-text) !important;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-donate-btn {
+  color: var(--trust-gold-text) !important;
+  font-weight: bold !important;
+}

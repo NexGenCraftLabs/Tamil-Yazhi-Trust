@@ -1,0 +1,43 @@
+.impact-floating-card {
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 25px 20px;
+  margin-top: -40px;   position: relative;
+  z-index: 10;
+  border-bottom: 4px solid #EBB01D; }
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #500608;   margin-bottom: 8px;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #331A00;
+  margin-bottom: 2px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6c757d;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .stat-divider {
+    border-right: 1px solid #dee2e6;
+  }
+}

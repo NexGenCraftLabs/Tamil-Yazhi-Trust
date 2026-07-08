@@ -1,0 +1,57 @@
+.programs-section {
+  background-color: #FFFDF6;
+  padding: 80px 0 60px 0;
+}
+
+.programs-main-title {
+  font-family: 'Georgia', serif;
+  color: #2B0504;   font-weight: 800;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+}
+
+.programs-main-title::before,
+.programs-main-title::after {
+  content: " ── ";
+  color: #F9D043;
+  font-weight: normal;
+  padding: 0 10px;
+}
+
+.program-card {
+  background-color: #FFFFFF;
+  border: 1px solid #F5E6C4 !important;   border-radius: 15px !important;
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 25px rgba(235, 176, 29, 0.15);
+  border-color: #EBB01D !important; }
+
+.program-icon-box {
+  width: 70px;
+  height: 70px;
+  background-color: #2B0504;   color: #F9D043;   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 20px auto;
+  border: 3px solid #F5E6C4;
+}
+
+.program-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2B0504;
+  line-height: 1.4;
+}
+
+.program-card-text {
+  font-size: 0.88rem;
+  color: #555555;
+  line-height: 1.5;
+}
