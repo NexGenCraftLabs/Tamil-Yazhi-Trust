@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { HeartFill, PeopleFill } from 'react-bootstrap-icons';
 import './HeroBanner.css';
+import heroGroup from "../assets/hero-group.png";
 
 function HeroBanner() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ function HeroBanner() {
             <div className="hero-graphics-container d-flex align-items-center justify-content-center">
             
               <img 
-                src="/src/assets/hero-group.png" 
+                src={heroGroup} 
                 alt="Yazhi Statue & Impact Grids" 
                 className="yazhi-statue-placeholder"
                 onError={(e) => { e.target.src = "https://via.placeholder.com/500x400/500608/F9D043?text=Yazhi+Statue+%26+Hexagon+Grid" }}
