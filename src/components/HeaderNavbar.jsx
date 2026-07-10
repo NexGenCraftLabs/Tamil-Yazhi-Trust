@@ -78,7 +78,7 @@ function HeaderNavbar() {
               <Nav.Link as={Link} to="/events">EVENTS</Nav.Link>
               <Nav.Link as={Link} to="/admin">ADMIN</Nav.Link>
 
-              
+              <Nav.Link as={Link} to="/getinvolved">GET INVOLVED</Nav.Link>
 
               <Nav.Link as={Link} to="/donate" className="nav-donate-btn">DONATE</Nav.Link>
               <Nav.Link as={Link} to="/contact">CONTACT US</Nav.Link>

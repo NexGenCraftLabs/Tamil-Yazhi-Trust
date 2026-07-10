@@ -12,6 +12,7 @@ import Admin from './pages/Admin';
 import Volunteer from './pages/Volunteer';
 import Donate from './pages/Donate';
 import Contact from './pages/Contact';
+import GetInvolved from './pages/GetInvolved';
 
 function Home() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path='/admin' element={<Admin />} />
         <Route path='/volunteer' element={<Volunteer />} />
         <Route path='/donate' element={<Donate />} />
+        <Route path='/getinvolved' element={<GetInvolved />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>
     </Router>

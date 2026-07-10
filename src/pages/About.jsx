@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import newYazhi from '../assets/hero-group.png';
+import newYazhi from '../assets/logo.png';
 import vivekanandaImg from '../assets/vivekananda.jpeg';
 import kalamImg from '../assets/kalam.jpeg';
 import netajiImg from '../assets/netaji.jpeg';

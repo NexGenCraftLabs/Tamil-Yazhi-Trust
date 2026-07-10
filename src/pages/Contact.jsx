@@ -87,7 +87,7 @@ function Contact() {
 
   
   const handleWhatsappChat = () => {
-    const number = "9087535322"; 
+    const number = " 9994846616"; 
     const text = encodeURIComponent("வணக்கம் தமிழ் யாழி அறக்கட்டளை, நான் தங்களை தொடர்பு கொள்ள விரும்புகிறேன். (Hello Tamil Yazhi Trust, I would like to connect with you.)");
     const whatsappUrl = `https://wa.me/${number}?text=${text}`;
     window.open(whatsappUrl, '_blank');

@@ -8,18 +8,16 @@ function Admin() {
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('dashboard');
 
-  
   const [notification, setNotification] = useState({ show: false, message: '', variant: 'success' });
   const [confirmModal, setConfirmModal] = useState({ show: false, title: '', message: '', onConfirm: null });
 
-  
-  const [selectedVolunteerMsg, setSelectedVolunteerMsg] = useState('');
-  const [selectedVolunteerName, setSelectedVolunteerName] = useState('');
-  const [showMsgModal, setShowMsgModal] = useState(false);
+  const [selectedVolunteer, setSelectedVolunteer] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   const [events, setEvents] = useState([]);
   const [volunteers, setVolunteers] = useState([]);
   const [donations, setDonations] = useState([]);
+  const [galleryUploads, setGalleryUploads] = useState([]);
 
   
   const [eventForm, setEventForm] = useState({
@@ -46,18 +44,16 @@ function Admin() {
   });
   const [showGalleryModal, setShowGalleryModal] = useState(false);
 
-  
   const presetImages = [
-    { label: 'Education Image', value: '/gallery/education1.jpg' },
-    { label: 'Mental Health Image', value: '/gallery/mental-health1.jpg' },
-    { label: 'Youth Image', value: '/gallery/youth1.jpg' },
-    { label: 'Community Image', value: '/gallery/community-welfare1.jpg' },
-    { label: 'Environment Image', value: '/gallery/environment1.jpg' },
-    { label: 'Awareness Image', value: '/gallery/awerness1.jpg' },
+    { label: 'Education & Skills', value: '/gallery/education1.jpg' },
+    { label: 'Mental Health Awareness', value: '/gallery/mental-health1.jpg' },
+    { label: 'Youth Leadership', value: '/gallery/youth1.jpg' },
+    { label: 'Community Welfare', value: '/gallery/community-welfare1.jpg' },
+    { label: 'Environment & Plants', value: '/gallery/environment1.jpg' },
+    { label: 'General Awareness', value: '/gallery/awerness1.jpg' },
   ];
 
   useEffect(() => {
-    
     const loggedInStatus = sessionStorage.getItem('admin_authenticated');
     if (loggedInStatus === 'true') {
       setIsLoggedIn(true);
@@ -100,9 +96,48 @@ function Admin() {
       setVolunteers(JSON.parse(savedVolunteers));
     } else {
       const defaultVolunteers = [
-        { id: 1, name: "Anbarasan K", email: "anbu@gmail.com", phone: "+91 9876543210", interest: "Education & Skill Development", date: "2026-07-02", status: "Approved" },
-        { id: 2, name: "Meera Krishnan", email: "meera.k@yahoo.com", phone: "+91 8765432109", interest: "Mental Health Awareness", date: "2026-07-05", status: "Contacted" },
-        { id: 3, name: "Siddharth S", email: "sid.eco@gmail.com", phone: "+91 7654321098", interest: "Environment & Sustainability", date: "2026-07-06", status: "Pending" }
+        { 
+          id: 1, 
+          name: "Anbarasan K", 
+          fatherName: "Kailasam M",
+          aadhaar: "345678901234",
+          gender: "Male",
+          dob: "1999-05-12",
+          bloodGroup: "O+",
+          email: "anbu@gmail.com", 
+          phone: "+91 9876543210", 
+          whatsapp: "+91 9876543210",
+          education: "B.Sc Psychology",
+          occupation: "Student",
+          district: "Trichy",
+          interest: "Education & Skill Development", 
+          mode: "Fieldwork",
+          experience: "Conducted weekend tuitions for children.",
+          message: "I want to help poor children with their studies.",
+          date: "2026-07-02", 
+          status: "Approved" 
+        },
+        { 
+          id: 2, 
+          name: "Meera Krishnan", 
+          fatherName: "Krishnan S",
+          aadhaar: "567890123456",
+          gender: "Female",
+          dob: "1997-09-24",
+          bloodGroup: "A+",
+          email: "meera.k@yahoo.com", 
+          phone: "+91 8765432109", 
+          whatsapp: "+91 8765432109",
+          education: "M.A. Social Work",
+          occupation: "Counsellor",
+          district: "Chennai",
+          interest: "Mental Health Awareness", 
+          mode: "Hybrid",
+          experience: "Volunteered in COVID helpline support.",
+          message: "Passionate about mental wellness drives.",
+          date: "2026-07-05", 
+          status: "Contacted" 
+        }
       ];
       setVolunteers(defaultVolunteers);
       localStorage.setItem('trust_volunteers', JSON.stringify(defaultVolunteers));
@@ -115,12 +150,18 @@ function Admin() {
     } else {
       const defaultDonations = [
         { id: 1, name: "Rajesh Kumar", email: "rajesh@gmail.com", amount: 5000, purpose: "Education & Kids Support", date: "2026-07-01", status: "Success" },
-        { id: 2, name: "Tamilselvi M", email: "tamilselvi@hotmail.com", amount: 10000, purpose: "Community Welfare Schemes", date: "2026-07-03", status: "Success" },
-        { id: 3, name: "Dr. Ramachandran", email: "ram.clinic@gmail.com", amount: 2500, purpose: "Mental Health Camp Support", date: "2026-07-04", status: "Success" },
-        { id: 4, name: "Vasuki S", email: "vasuki.env@gmail.com", amount: 1500, purpose: "Environment Initiatives", date: "2026-07-06", status: "Success" }
+        { id: 2, name: "Tamilselvi M", email: "tamilselvi@hotmail.com", amount: 10000, purpose: "Community Welfare Schemes", date: "2026-07-03", status: "Success" }
       ];
       setDonations(defaultDonations);
       localStorage.setItem('trust_donations', JSON.stringify(defaultDonations));
+    }
+
+    
+    const savedUploads = localStorage.getItem('trust_gallery_uploads');
+    if (savedUploads) {
+      setGalleryUploads(JSON.parse(savedUploads));
+    } else {
+      setGalleryUploads([]);
     }
   }, []);
 
@@ -131,10 +172,10 @@ function Admin() {
       sessionStorage.setItem('admin_authenticated', 'true');
       localStorage.setItem('role', 'admin');
       localStorage.setItem('isAdmin', 'true');
-      showNotification('அட்மின் லாகின் வெற்றி பெற்றது! லாகின் வெற்றிகரமாக முடிந்தது.', 'success');
+      showNotification('அட்மின் லாகின் வெற்றி பெற்றது!', 'success');
       setLoginError('');
     } else if (email.trim().toLowerCase() !== 'rdharish3@gmail.com') {
-      setLoginError('அனுமதி மறுக்கப்பட்டது! இந்த மின்னஞ்சல் முகவரிக்கு அட்மின் லாகின் செய்ய அனுமதி இல்லை.');
+      setLoginError('அனுமதி மறுக்கப்பட்டது! இந்த மின்னஞ்சல் முகவரிக்கு அனுமதி இல்லை.');
     } else {
       setLoginError('தவறான கடவுச்சொல்! மீண்டும் முயற்சிக்கவும்.');
     }
@@ -145,7 +186,7 @@ function Admin() {
     sessionStorage.removeItem('admin_authenticated');
     localStorage.removeItem('role');
     localStorage.removeItem('isAdmin');
-    showNotification('நீங்கள் வெற்றிகரமாக வெளியேறிவிட்டீர்கள்.', 'warning');
+    showNotification('வெற்றிகரமாக வெளியேறிவிட்டீர்கள்.', 'warning');
   };
 
   const showNotification = (message, variant = 'success') => {
@@ -166,18 +207,16 @@ function Admin() {
     const imagePath = eventForm.image || "/gallery/education1.jpg";
 
     if (isEditingEvent) {
-      
       updatedEvents = events.map(ev => ev.id === eventForm.id ? { ...eventForm, image: imagePath } : ev);
       showNotification('நிகழ்ச்சி வெற்றிகரமாக மேம்படுத்தப்பட்டது!');
     } else {
-      
       const newEvent = {
         ...eventForm,
         id: Date.now(),
         image: imagePath
       };
       updatedEvents = [newEvent, ...events];
-      showNotification('புதிய வரவிருக்கும் நிகழ்ச்சி வெற்றிகரமாகச் சேர்க்கப்பட்டது!');
+      showNotification('புதிய நிகழ்ச்சி சேர்க்கப்பட்டது!');
     }
 
     setEvents(updatedEvents);
@@ -229,14 +268,10 @@ function Admin() {
     }
 
     let finalImageUrl = galleryForm.presetUrl;
-    if (galleryForm.imageType === 'upload' && galleryForm.imageFile) {
+    if (galleryForm.imageType === 'upload' && galleryForm.imagePreview) {
       finalImageUrl = galleryForm.imagePreview; 
     }
 
-    
-    const savedUploads = localStorage.getItem('trust_gallery_uploads');
-    const existingUploads = savedUploads ? JSON.parse(savedUploads) : [];
-    
     const newUpload = {
       id: Date.now(),
       albumId: galleryForm.albumId,
@@ -245,12 +280,12 @@ function Admin() {
       uploadedAt: new Date().toLocaleDateString()
     };
 
-    const updatedUploads = [newUpload, ...existingUploads];
+    const updatedUploads = [newUpload, ...galleryUploads];
+    setGalleryUploads(updatedUploads);
     localStorage.setItem('trust_gallery_uploads', JSON.stringify(updatedUploads));
     
     showNotification('புகைப்படம் வெற்றிகரமாக ஆல்பத்தில் பதிவேற்றப்பட்டது!');
     setShowGalleryModal(false);
-    
     
     setGalleryForm({
       albumId: 'education',
@@ -265,12 +300,31 @@ function Admin() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setGalleryForm({
-        ...galleryForm,
-        imageFile: file,
-        imagePreview: URL.createObjectURL(file)
-      });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setGalleryForm(prev => ({
+          ...prev,
+          imageFile: file,
+          imagePreview: reader.result
+        }));
+      };
+      reader.readAsDataURL(file);
     }
+  };
+
+  const deleteUploadedPhoto = (photoId) => {
+    setConfirmModal({
+      show: true,
+      title: 'புகைப்படத்தை நீக்க வேண்டுமா?',
+      message: 'இந்த புகைப்படத்தை ஆல்பத்திலிருந்து நிரந்தரமாக நீக்க விரும்புகிறீர்களா?',
+      onConfirm: () => {
+        const updatedList = galleryUploads.filter(photo => photo.id !== photoId);
+        setGalleryUploads(updatedList);
+        localStorage.setItem('trust_gallery_uploads', JSON.stringify(updatedList));
+        setConfirmModal({ show: false });
+        showNotification('புகைப்படம் வெற்றிகரமாக நீக்கப்பட்டது.', 'warning');
+      }
+    });
   };
 
   const updateVolunteerStatus = (volunteerId, newStatus) => {
@@ -300,7 +354,6 @@ function Admin() {
     });
   };
 
-  
   const totalDonationsAmount = donations.reduce((sum, don) => sum + don.amount, 0);
 
   return (
@@ -317,7 +370,7 @@ function Admin() {
              }}>
           <div className="d-flex justify-content-between align-items-center">
             <span className="fw-semibold">📢 {notification.message}</span>
-            <Button variant="link" className="text-white p-0 ms-2 fw-bold" onClick={() => setNotification({ show: false, message: '', variant: 'success' })}>✕</Button>
+            <Button variant="link" className="text-white p-0 ms-2 fw-bold" onClick={() => setNotification({ show: false })}>✕</Button>
           </div>
         </div>
       )}
@@ -337,8 +390,8 @@ function Admin() {
       </Modal>
 
       <Container>
-        
         {!isLoggedIn ? (
+          
           <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
             <Col xs={12} sm={10} md={6} lg={5}>
               <Card className="border-0 shadow-lg overflow-hidden" style={{ borderRadius: '15px', border: '2px solid #dfb15b' }}>
@@ -356,7 +409,7 @@ function Admin() {
                       <Form.Label className="fw-semibold">Email Address (மின்னஞ்சல் முகவரி)</Form.Label>
                       <Form.Control 
                         type="email" 
-                        placeholder="rdharish3@gmail.com" 
+                        placeholder="Admin Email" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -378,18 +431,12 @@ function Admin() {
 
                     <Button 
                       type="submit" 
-                      className="w-full font-cinzel fw-bold py-2 shadow"
+                      className="w-100 font-cinzel fw-bold py-2 shadow"
                       style={{ backgroundColor: '#dfb15b', color: '#250407', border: 'none', borderRadius: '30px', transition: 'all 0.3s' }}
-                      onMouseEnter={(e) => { e.target.style.backgroundColor = '#f7e7c4'; }}
-                      onMouseLeave={(e) => { e.target.style.backgroundColor = '#dfb15b'; }}
                     >
                       LOGIN TO DASHBOARD
                     </Button>
                   </Form>
-
-                  <div className="text-center mt-3 text-white-50" style={{ fontSize: '0.8rem' }}>
-                    <span>Admin Email: <strong>rdharish3@gmail.com</strong> | Password: <strong>yazhi@2026</strong></span>
-                  </div>
                 </Card.Body>
               </Card>
             </Col>
@@ -397,7 +444,6 @@ function Admin() {
         ) : (
           
           <>
-            {}
             <div className="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3 pb-3" style={{ borderBottom: '2px solid #250407' }}>
               <div>
                 <h1 className="display-5 fw-bold font-cinzel m-0" style={{ color: '#250407', fontFamily: "'Cinzel', serif" }}>
@@ -444,8 +490,8 @@ function Admin() {
               <Col xs={12} sm={6} md={3}>
                 <Card className="border-0 shadow text-center h-100" style={{ backgroundColor: '#250407', border: '1.5px solid #dfb15b', borderRadius: '12px' }}>
                   <Card.Body className="p-3 text-white">
-                    <div className="text-warning h2 mb-1">🌟 Active</div>
-                    <div className="text-uppercase font-cinzel small tracking-wider" style={{ color: '#f7e7c4' }}>Portal Status</div>
+                    <div className="text-warning h2 mb-1">📸 {galleryUploads.length}</div>
+                    <div className="text-uppercase font-cinzel small tracking-wider" style={{ color: '#f7e7c4' }}>Uploaded Photos</div>
                   </Card.Body>
                 </Card>
               </Col>
@@ -454,8 +500,6 @@ function Admin() {
             {}
             <Tab.Container id="admin-tabs" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
               <Row className="g-4">
-                
-                {}
                 <Col lg={3}>
                   <Card className="border-0 shadow p-2" style={{ backgroundColor: '#250407', border: '1px solid #dfb15b', borderRadius: '15px' }}>
                     <Nav variant="pills" className="flex-column gap-2 admin-nav-pills">
@@ -499,13 +543,12 @@ function Admin() {
                           📊 OVERVIEW & RECENT ACTIVITIES
                         </h2>
                         <p style={{ color: '#f7e7c4', opacity: '0.9' }}>
-                          தமிழ் யாழி அறக்கட்டளையின் தினசரி நிகழ்வுகள் மற்றும் நன்கொடைகளைக் கண்காணிக்க இந்த கட்டுப்பாட்டு மையம் வடிவமைக்கப்பட்டுள்ளது. நீங்கள் செய்ய வேண்டிய முக்கியச் செயல்களை கீழே உள்ள விரைவுப் பொத்தான்கள் மூலம் உடனே தொடங்கலாம்.
+                          தமிழ் யாழி அறக்கட்டளையின் தினசரி நிகழ்வுகள் மற்றும் நன்கொடைகளைக் கண்காணிக்க இந்த கட்டுப்பாட்டு மையம் வடிவமைக்கப்பட்டுள்ளது.
                         </p>
-                        
                         <Row className="g-4 mt-2">
                           <Col md={6}>
                             <Card className="border-0 h-100 p-3" style={{ backgroundColor: '#1a0204', border: '1px solid rgba(223, 177, 91, 0.3)' }}>
-                              <h5 className="text-warning mb-3">⚡ Quick Event Actions</h5>
+                              <h5 className="text-warning mb-3">⚡ Event Management</h5>
                               <p className="small text-white-50">புதிய நிகழ்வுகள் அல்லது திட்டங்களை வரவிருக்கும் நிகழ்வுகள் (Upcoming Events) பக்கத்திற்கு உடனடியாக வெளியிடவும்.</p>
                               <Button 
                                 onClick={() => { resetEventForm(); setShowEventModal(true); }}
@@ -531,16 +574,6 @@ function Admin() {
                             </Card>
                           </Col>
                         </Row>
-                        
-                        {}
-                        <div className="mt-5 p-3 rounded" style={{ backgroundColor: 'rgba(223,177,91,0.05)', border: '1px dashed #dfb15b' }}>
-                          <h6 className="text-warning mb-2">📌 Admin Tips:</h6>
-                          <ul className="small m-0 text-white-50 ps-3">
-                            <li className="mb-1">தன்னார்வலர்களின் பதிவுகளை ஏற்றுக்கொண்ட பின், அவர்களின் நிலையை 'Approved' அல்லது 'Contacted' என மாற்றி விடுங்கள்.</li>
-                            <li className="mb-1">நன்கொடைகளின் வெற்றிகரமான நிலையை கச்சிதமாகக் கண்காணித்திடுங்கள்.</li>
-                            <li className="mb-1">புதிதாக அப்லோடு செய்யப்படும் புகைப்படங்கள் கேலரி ஆல்பத்தில் முதல் படமாகத் தோன்றும்.</li>
-                          </ul>
-                        </div>
                       </Tab.Pane>
 
                       {}
@@ -570,14 +603,9 @@ function Admin() {
                             <tbody>
                               {events.map((ev) => (
                                 <tr key={ev.id}>
-                                  <td>
-                                    <Badge bg="warning" text="dark" className="fw-bold">{ev.category}</Badge>
-                                  </td>
+                                  <td><Badge bg="warning" text="dark" className="fw-bold">{ev.category}</Badge></td>
                                   <td className="fw-semibold text-white">{ev.title}</td>
-                                  <td className="small text-white-50">
-                                    📅 {ev.date} <br />
-                                    ⏰ {ev.time}
-                                  </td>
+                                  <td className="small text-white-50">📅 {ev.date} <br /> ⏰ {ev.time}</td>
                                   <td className="small">{ev.venue}</td>
                                   <td className="text-center">
                                     <div className="d-flex justify-content-center gap-2">
@@ -587,16 +615,12 @@ function Admin() {
                                   </td>
                                 </tr>
                               ))}
-                              {events.length === 0 && (
-                                <tr>
-                                  <td colSpan="5" className="text-center py-4 text-white-50">No upcoming events found. Click "Add New Event" to create one.</td>
-                                </tr>
-                              )}
                             </tbody>
                           </Table>
                         </div>
                       </Tab.Pane>
 
+                      {}
                       {}
                       <Tab.Pane eventKey="gallery">
                         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -606,31 +630,47 @@ function Admin() {
                             className="font-cinzel fw-bold border-0 shadow px-4 py-2"
                             style={{ backgroundColor: '#dfb15b', color: '#250407', borderRadius: '30px' }}
                           >
-                            📤 UPLOAD PHOTO
+                            📤 UPLOAD NEW IMAGE
                           </Button>
                         </div>
-                        <p className="text-white-50 small mb-4">
-                          வகுப்புகள் மற்றும் விழிப்புணர்வு முகாம்களின்போது எடுக்கப்பட்ட புகைப்படங்களை அந்தந்த பிரிவுகளின் (ஆல்பம்) கீழ் பதிவேற்றி ஆவணப்படுத்தலாம்.
-                        </p>
-
-                        <div className="p-4 rounded mb-4 text-center" style={{ backgroundColor: '#1a0204', border: '1px dashed #dfb15b' }}>
-                          <span className="text-warning d-block mb-2 font-cinzel fw-bold">🚀 Quick Upload Wizard is ready!</span>
-                          <p className="small text-white-50 mb-3">உங்கள் கணினியிலிருந்து அல்லது எங்களது Preset இமேஜ்களைப் பயன்படுத்தி உடனே உங்கள் அப்லோடுகளைப் பரிசோதிக்கலாம்.</p>
-                          <Button 
-                            onClick={() => setShowGalleryModal(true)} 
-                            style={{ backgroundColor: '#250407', color: '#dfb15b', border: '1px solid #dfb15b', borderRadius: '20px' }}
-                            className="px-4 font-cinzel fw-bold"
-                          >
-                            ⚡ Open Upload Wizard
-                          </Button>
-                        </div>
+                        <p className="text-white-50 small mb-4">வகுப்புகள் மற்றும் விழிப்புணர்வு முகாம்களின்போது எடுக்கப்பட்ட புகைப்படங்களை அந்தந்த பிரிவுகளின் கீழ் பதிவேற்றலாம்.</p>
+                        
+                        <h5 className="text-warning font-cinzel mb-3">📸 Uploaded Photos ({galleryUploads.length})</h5>
+                        <Row className="g-3">
+                          {galleryUploads.map((photo) => (
+                            <Col xs={12} sm={6} md={4} key={photo.id}>
+                              <Card className="border-0 shadow-sm overflow-hidden h-100" style={{ backgroundColor: '#1a0204', border: '1px solid rgba(223,177,91,0.2)' }}>
+                                <div style={{ height: '140px', overflow: 'hidden' }}>
+                                  <img src={photo.url} alt={photo.title} className="w-100 h-100" style={{ objectFit: 'cover' }} />
+                                </div>
+                                <Card.Body className="p-2 d-flex flex-column justify-content-between">
+                                  <div>
+                                    <Badge bg="warning" text="dark" className="mb-1 small text-uppercase">{photo.albumId}</Badge>
+                                    <div className="small fw-semibold text-white text-truncate">{photo.title}</div>
+                                  </div>
+                                  <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top border-secondary">
+                                    <span className="text-white-50" style={{ fontSize: '0.75rem' }}>{photo.uploadedAt}</span>
+                                    <Button variant="link" className="p-0 text-danger fw-bold text-decoration-none small" onClick={() => deleteUploadedPhoto(photo.id)}>
+                                      🗑️ Remove
+                                    </Button>
+                                  </div>
+                                </Card.Body>
+                              </Card>
+                            </Col>
+                          ))}
+                          {galleryUploads.length === 0 && (
+                            <Col xs={12} className="text-center py-5 text-white-50">
+                              <p className="m-0">No photos uploaded yet. Use the "Upload New Image" button to start adding photos.</p>
+                            </Col>
+                          )}
+                        </Row>
                       </Tab.Pane>
 
                       {}
                       <Tab.Pane eventKey="volunteers">
                         <h2 className="font-cinzel text-warning mb-4">🤝 REGISTERED VOLUNTEERS DIRECTORY</h2>
                         <p className="text-white-50 small mb-4">
-                          வெப்சைட்டின் Volunteer படிவத்தில் பதிவு செய்துள்ள தன்னார்வலர்களின் விவரங்கள் மற்றும் அவர்களின் விருப்பங்கள் கீழே உள்ளன.
+                          விண்ணப்பித்த தன்னார்வலர்களின் விவரங்களைக் காண பெயரின் அருகிலுள்ள 🔍 விவரங்கள் பொத்தானை அழுத்தவும்.
                         </p>
 
                         <div className="table-responsive">
@@ -638,9 +678,9 @@ function Admin() {
                             <thead>
                               <tr style={{ backgroundColor: '#1a0204', color: '#dfb15b' }}>
                                 <th>Name</th>
+                                <th>Father's Name</th>
                                 <th>Contact Details</th>
                                 <th>Area of Interest</th>
-                                <th>Reg. Date</th>
                                 <th>Status</th>
                                 <th className="text-center">Actions</th>
                               </tr>
@@ -650,27 +690,13 @@ function Admin() {
                                 <tr key={vol.id}>
                                   <td className="fw-semibold text-white">
                                     {vol.name}
-                                    {vol.message && (
-                                      <button 
-                                        onClick={() => {
-                                          setSelectedVolunteerName(vol.name);
-                                          setSelectedVolunteerMsg(vol.message);
-                                          setShowMsgModal(true);
-                                        }}
-                                        className="btn btn-link text-warning p-0 ms-2 text-decoration-none small"
-                                        style={{ fontSize: '0.8rem' }}
-                                        title="View Message"
-                                      >
-                                        💬 Message
-                                      </button>
-                                    )}
                                   </td>
+                                  <td className="text-white-50">{vol.fatherName || 'N/A'}</td>
                                   <td className="small">
                                     📧 {vol.email} <br />
                                     📞 {vol.phone}
                                   </td>
                                   <td><Badge bg="secondary" className="p-2">{vol.interest}</Badge></td>
-                                  <td className="small text-white-50">{vol.date}</td>
                                   <td>
                                     <Badge 
                                       bg={vol.status === 'Approved' ? 'success' : vol.status === 'Contacted' ? 'info' : 'warning'} 
@@ -682,18 +708,23 @@ function Admin() {
                                   </td>
                                   <td className="text-center">
                                     <div className="d-flex justify-content-center gap-2 flex-wrap">
+                                      <Button 
+                                        variant="warning" 
+                                        size="sm" 
+                                        className="fw-bold text-dark" 
+                                        onClick={() => {
+                                          setSelectedVolunteer(vol);
+                                          setShowDetailsModal(true);
+                                        }}
+                                      >
+                                        🔍 View Details
+                                      </Button>
                                       <Button variant="outline-success" size="sm" onClick={() => updateVolunteerStatus(vol.id, 'Approved')}>✓ Approve</Button>
-                                      <Button variant="outline-info" size="sm" onClick={() => updateVolunteerStatus(vol.id, 'Contacted')}>📞 Call</Button>
                                       <Button variant="outline-danger" size="sm" onClick={() => deleteVolunteer(vol.id)}>🗑️ Remove</Button>
                                     </div>
                                   </td>
                                 </tr>
                               ))}
-                              {volunteers.length === 0 && (
-                                <tr>
-                                  <td colSpan="6" className="text-center py-4 text-white-50">No registered volunteers found.</td>
-                                </tr>
-                              )}
                             </tbody>
                           </Table>
                         </div>
@@ -701,17 +732,7 @@ function Admin() {
 
                       {}
                       <Tab.Pane eventKey="donations">
-                        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                          <h2 className="font-cinzel text-warning m-0">💰 RECEIVED DONATION RECORDS</h2>
-                          <div className="text-end">
-                            <span className="small text-white-50">Total Donations Raised: </span>
-                            <span className="fw-bold text-success" style={{ fontSize: '1.2rem' }}>₹{totalDonationsAmount.toLocaleString('en-IN')}</span>
-                          </div>
-                        </div>
-                        <p className="text-white-50 small mb-4">
-                          நமது தமிழ் யாழி அறக்கட்டளையின் பல்வேறு பொதுநலத் திட்டங்களுக்கு ஆன்லைன் மூலம் மக்கள் அளித்த நன்கொடைகளின் வெற்றிகரமான பட்டியல்.
-                        </p>
-
+                        <h2 className="font-cinzel text-warning mb-4">💰 RECEIVED DONATION RECORDS</h2>
                         <div className="table-responsive">
                           <Table bordered hover variant="dark" className="align-middle" style={{ borderColor: 'rgba(223,177,91,0.2)' }}>
                             <thead>
@@ -721,7 +742,6 @@ function Admin() {
                                 <th className="text-end">Amount (₹)</th>
                                 <th>Supported Cause</th>
                                 <th>Date</th>
-                                <th className="text-center">Status</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -732,160 +752,227 @@ function Admin() {
                                   <td className="text-end fw-bold text-warning">₹{don.amount.toLocaleString('en-IN')}</td>
                                   <td className="small">{don.purpose}</td>
                                   <td className="small text-white-50">{don.date}</td>
-                                  <td className="text-center">
-                                    <Badge bg="success" className="fw-bold">✓ {don.status}</Badge>
-                                  </td>
                                 </tr>
                               ))}
                             </tbody>
                           </Table>
                         </div>
                       </Tab.Pane>
-
                     </Tab.Content>
                   </Card>
                 </Col>
-
               </Row>
             </Tab.Container>
           </>
         )}
 
-        
+        {}
+        {}
         <Modal show={showEventModal} onHide={() => setShowEventModal(false)} centered size="lg">
           <Modal.Header closeButton style={{ backgroundColor: '#250407', borderBottom: '2px solid #dfb15b' }}>
-            <Modal.Title className="font-cinzel fw-bold text-warning text-uppercase" style={{ fontSize: '1.2rem' }}>
-              {isEditingEvent ? "✏️ Edit Event Details" : "📅 Publish New Upcoming Event"}
+            <Modal.Title className="font-cinzel fw-bold text-warning text-uppercase">
+              {isEditingEvent ? "✏️ Edit Event" : "📅 Publish Event"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ backgroundColor: '#1a0204', color: '#f7e7c4' }}>
             <Form onSubmit={handleSaveEvent}>
-              
               <Form.Group className="mb-3">
                 <Form.Label className="fw-semibold">Event Title (நிகழ்ச்சி பெயர்)</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Enter event name" 
-                  value={eventForm.title} 
-                  onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })} 
-                  required 
-                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                />
+                <Form.Control type="text" value={eventForm.title} onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })} required style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
               </Form.Group>
-
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Event Date</Form.Label>
-                    <Form.Control 
-                      type="date" 
-                      value={eventForm.date} 
-                      onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })} 
-                      required 
-                      style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                    />
+                    <Form.Label className="fw-semibold">Date</Form.Label>
+                    <Form.Control type="date" value={eventForm.date} onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })} required style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Timings (e.g., 10 AM - 1 PM)</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder="Enter timings" 
-                      value={eventForm.time} 
-                      onChange={(e) => setEventForm({ ...eventForm, time: e.target.value })} 
-                      required 
-                      style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                    />
+                    <Form.Label className="fw-semibold">Time</Form.Label>
+                    <Form.Control type="text" value={eventForm.time} onChange={(e) => setEventForm({ ...eventForm, time: e.target.value })} required style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
                   </Form.Group>
                 </Col>
               </Row>
-
               <Form.Group className="mb-3">
-                <Form.Label className="fw-semibold">Venue / Address (நடைபெறும் இடம்)</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Enter location" 
-                  value={eventForm.venue} 
-                  onChange={(e) => setEventForm({ ...eventForm, venue: e.target.value })} 
-                  required 
-                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                />
+                <Form.Label className="fw-semibold">Venue (இடம்)</Form.Label>
+                <Form.Control type="text" value={eventForm.venue} onChange={(e) => setEventForm({ ...eventForm, venue: e.target.value })} required style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
               </Form.Group>
-
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-semibold">Category</Form.Label>
-                    <Form.Select 
-                      value={eventForm.category} 
-                      onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })} 
-                      style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
-                    >
-                      <option value="Education">Education & Skills</option>
+                    <Form.Select value={eventForm.category} onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })} style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}>
+                      <option value="Education">Education</option>
                       <option value="Mental Health">Mental Health</option>
                       <option value="Youth Leadership">Youth Leadership</option>
-                      <option value="Community Welfare">Community Welfare</option>
                       <option value="Environment">Environment</option>
-                      <option value="Awareness">Awareness Program</option>
+                      <option value="Community Welfare">Community Welfare</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Banner Image URL / Asset Path</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder="/gallery/education1.jpg" 
-                      value={eventForm.image} 
-                      onChange={(e) => setEventForm({ ...eventForm, image: e.target.value })} 
-                      style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                    />
+                    <Form.Label className="fw-semibold">Banner Image URL</Form.Label>
+                    <Form.Control type="text" value={eventForm.image} onChange={(e) => setEventForm({ ...eventForm, image: e.target.value })} style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
                   </Form.Group>
                 </Col>
               </Row>
-
-              <Form.Group className="mb-4">
-                <Form.Label className="fw-semibold">Event Details (நிகழ்ச்சியின் முழு விவரங்கள்)</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows={4} 
-                  placeholder="Describe the event details" 
-                  value={eventForm.desc} 
-                  onChange={(e) => setEventForm({ ...eventForm, desc: e.target.value })} 
-                  required 
-                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
-                />
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Description</Form.Label>
+                <Form.Control as="textarea" rows={4} value={eventForm.desc} onChange={(e) => setEventForm({ ...eventForm, desc: e.target.value })} required style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} />
               </Form.Group>
-
               <div className="text-end">
-                <Button variant="secondary" onClick={() => setShowEventModal(false)} className="me-2" style={{ borderRadius: '20px' }}>Cancel</Button>
-                <Button type="submit" style={{ backgroundColor: '#dfb15b', color: '#250407', border: 'none', fontWeight: 'bold', borderRadius: '20px' }}>
-                  {isEditingEvent ? "Save Changes" : "Publish Event"}
-                </Button>
+                <Button variant="secondary" onClick={() => setShowEventModal(false)} className="me-2">Cancel</Button>
+                <Button type="submit" style={{ backgroundColor: '#dfb15b', color: '#250407', border: 'none', fontWeight: 'bold' }}>Save</Button>
               </div>
-
             </Form>
           </Modal.Body>
         </Modal>
 
-        
-        <Modal show={showMsgModal} onHide={() => setShowMsgModal(false)} centered>
+        {}
+        <Modal show={showGalleryModal} onHide={() => setShowGalleryModal(false)} centered size="md">
           <Modal.Header closeButton style={{ backgroundColor: '#250407', borderBottom: '2px solid #dfb15b' }}>
-            <Modal.Title className="font-cinzel fw-bold text-warning text-uppercase" style={{ fontSize: '1.1rem' }}>
-              💬 Message from {selectedVolunteerName}
+            <Modal.Title className="font-cinzel fw-bold text-warning text-uppercase">
+              📤 Upload Event Photo
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ backgroundColor: '#1a0204', color: '#f7e7c4' }}>
-            <div className="p-3 rounded" style={{ backgroundColor: '#250407', border: '1px solid rgba(223, 177, 91, 0.3)', minHeight: '100px' }}>
-              <p className="m-0 text-justify" style={{ lineHeight: '1.6', fontSize: '0.95rem' }}>
-                {selectedVolunteerMsg ? selectedVolunteerMsg : "No message provided by the volunteer."}
-              </p>
-            </div>
+            <Form onSubmit={handlePhotoUpload}>
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Select Album Category (ஆல்பம் பிரிவு)</Form.Label>
+                <Form.Select 
+                  value={galleryForm.albumId} 
+                  onChange={(e) => setGalleryForm({ ...galleryForm, albumId: e.target.value })}
+                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
+                >
+                  <option value="mental-health">Mental Health Awareness</option>
+                  <option value="education">Education & Skill Development</option>
+                  <option value="youth-leadership">Youth Leadership & Empowerment</option>
+                  <option value="community-welfare">Community Welfare</option>
+                  <option value="environment">Environment & Sustainability</option>
+                  <option value="awareness">General Awareness Program</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Photo Title / Caption (தலைப்பு)</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder="Enter a caption for the photo" 
+                  value={galleryForm.title}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
+                  required
+                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Image Source Method (மூலம்)</Form.Label>
+                <Form.Select 
+                  value={galleryForm.imageType}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, imageType: e.target.value })}
+                  style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
+                >
+                  <option value="preset">Use Preset Cover Assets</option>
+                  <option value="upload">Upload Computer File (உள்நாட்டு கோப்பு)</option>
+                </Form.Select>
+              </Form.Group>
+
+              {galleryForm.imageType === 'preset' ? (
+                <Form.Group className="mb-4">
+                  <Form.Label className="fw-semibold">Choose Preset Cover Image</Form.Label>
+                  <Form.Select 
+                    value={galleryForm.presetUrl}
+                    onChange={(e) => setGalleryForm({ ...galleryForm, presetUrl: e.target.value })}
+                    style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
+                  >
+                    {presetImages.map((img, idx) => (
+                      <option key={idx} value={img.value}>{img.label}</option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              ) : (
+                <Form.Group className="mb-4">
+                  <Form.Label className="fw-semibold">Select Local Image File</Form.Label>
+                  <Form.Control 
+                    type="file" 
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }}
+                  />
+                  {galleryForm.imagePreview && (
+                    <div className="mt-3 text-center border p-2 rounded" style={{ borderColor: 'rgba(223,177,91,0.2)' }}>
+                      <span className="small text-white-50 d-block mb-2">Image Preview:</span>
+                      <img src={galleryForm.imagePreview} alt="Preview" style={{ maxHeight: '150px', maxWidth: '100%' }} />
+                    </div>
+                  )}
+                </Form.Group>
+              )}
+
+              <div className="text-end mt-4 pt-2 border-top border-secondary">
+                <Button variant="secondary" onClick={() => setShowGalleryModal(false)} className="me-2" style={{ borderRadius: '20px' }}>Cancel</Button>
+                <Button type="submit" style={{ backgroundColor: '#dfb15b', color: '#250407', border: 'none', fontWeight: 'bold', borderRadius: '20px' }}>Upload Now</Button>
+              </div>
+            </Form>
           </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: '#1a0204', borderTop: '1px solid rgba(223,177,91,0.1)' }}>
-            <Button variant="outline-warning" onClick={() => setShowMsgModal(false)} style={{ borderRadius: '20px' }}>
-              Close
+        </Modal>
+
+        {}
+        <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)} size="lg" centered>
+          <Modal.Header closeButton style={{ backgroundColor: '#250407', borderBottom: '2px solid #dfb15b' }}>
+            <Modal.Title className="font-cinzel fw-bold text-warning text-uppercase">
+              🤝 Volunteer Full Profile / முழு விவரங்கள்
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: '#1a0204', color: '#f7e7c4' }}>
+            {selectedVolunteer ? (
+              <Container fluid className="py-2">
+                <Row className="g-4">
+                  <Col md={6} style={{ borderRight: '1px solid rgba(223,177,91,0.2)' }}>
+                    <h5 className="text-warning font-cinzel border-bottom pb-2 mb-3">👨‍💼 Personal Information</h5>
+                    <p className="mb-2"><strong>Full Name / பெயர்:</strong> <span className="text-white">{selectedVolunteer.name}</span></p>
+                    <p className="mb-2"><strong>Father's Name / தந்தை பெயர்:</strong> <span className="text-white">{selectedVolunteer.fatherName || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Aadhaar Number / ஆதார் எண்:</strong> <span className="text-white fw-bold">{selectedVolunteer.aadhaar || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Gender / பாலினம்:</strong> <span className="text-white">{selectedVolunteer.gender || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>DOB / பிறந்த தேதி:</strong> <span className="text-white">{selectedVolunteer.dob || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Blood Group / இரத்த வகை:</strong> <span className="text-danger fw-bold">{selectedVolunteer.bloodGroup || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>District / மாவட்டம்:</strong> <span className="text-white">{selectedVolunteer.district || 'N/A'}</span></p>
+                  </Col>
+                  
+                  <Col md={6}>
+                    <h5 className="text-warning font-cinzel border-bottom pb-2 mb-3">📞 Contact & Services</h5>
+                    <p className="mb-2"><strong>Email / மின்னஞ்சல்:</strong> <span className="text-white">{selectedVolunteer.email}</span></p>
+                    <p className="mb-2"><strong>Mobile No / கைபேசி:</strong> <span className="text-white">{selectedVolunteer.phone}</span></p>
+                    <p className="mb-2"><strong>WhatsApp No / வாட்ஸ்அப்:</strong> <span className="text-white">{selectedVolunteer.whatsapp || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Education / கல்வி:</strong> <span className="text-white">{selectedVolunteer.education || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Occupation / தொழில்:</strong> <span className="text-white">{selectedVolunteer.occupation || 'N/A'}</span></p>
+                    <p className="mb-2"><strong>Interest / சேவை விருப்பம்:</strong> <span className="text-warning fw-bold">{selectedVolunteer.interest}</span></p>
+                    <p className="mb-2"><strong>Mode / பங்களிப்பு முறை:</strong> <span className="text-white fw-bold">{selectedVolunteer.mode || 'N/A'}</span></p>
+                  </Col>
+                </Row>
+                <hr style={{ borderColor: 'rgba(223,177,91,0.2)' }} />
+                <Row className="mt-3">
+                  <Col xs={12}>
+                    <h5 className="text-warning font-cinzel">💼 Previous Experience / தன்னார்வ அனுபவம்:</h5>
+                    <div className="p-3 rounded mb-3" style={{ backgroundColor: '#250407', border: '1px solid rgba(223,177,91,0.2)' }}>
+                      <p className="m-0 text-white-50" style={{ fontSize: '0.9rem' }}>{selectedVolunteer.experience || 'No previous experience shared.'}</p>
+                    </div>
+
+                    <h5 className="text-warning font-cinzel">✍️ Why do you want to join us? / ஏன் இணைய விரும்புகிறார்?</h5>
+                    <div className="p-3 rounded" style={{ backgroundColor: '#250407', border: '1px solid rgba(223,177,91,0.2)' }}>
+                      <p className="m-0 text-white" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>{selectedVolunteer.message || 'No statement provided.'}</p>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            ) : (
+              <p className="text-center">No volunteer selected.</p>
+            )}
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: '#1a0204', borderTop: '1px solid rgba(223,177,91,0.2)' }}>
+            <Button variant="outline-warning" onClick={() => setShowDetailsModal(false)} style={{ borderRadius: '20px' }}>
+              Close / மூடு
             </Button>
           </Modal.Footer>
         </Modal>
