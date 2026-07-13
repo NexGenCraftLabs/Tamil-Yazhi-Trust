@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import './Contact.css';
 
 
 const PhoneIcon = () => (
@@ -87,7 +88,7 @@ function Contact() {
 
   
   const handleWhatsappChat = () => {
-    const number = " 9994846616"; 
+    const number = "+91 9994846616"; 
     const text = encodeURIComponent("வணக்கம் தமிழ் யாழி அறக்கட்டளை, நான் தங்களை தொடர்பு கொள்ள விரும்புகிறேன். (Hello Tamil Yazhi Trust, I would like to connect with you.)");
     const whatsappUrl = `https://wa.me/${number}?text=${text}`;
     window.open(whatsappUrl, '_blank');
@@ -201,7 +202,7 @@ function Contact() {
                     
                     {}
                     <a 
-                      href="https://www.facebook.com/share/191kfyKqAy/" 
+                      href="https://x.com/TamilYazhiTrust" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="text-white bg-dark p-2 rounded-circle d-flex align-items-center justify-content-center"
@@ -267,7 +268,8 @@ function Contact() {
                       name="name"
                       placeholder="Enter your full name" 
                       value={formData.name} 
-                      onChange={handleChange} 
+                      onChange={handleChange}
+                      className="custom-placeholder" 
                       required 
                       style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
                     />
@@ -275,13 +277,14 @@ function Contact() {
 
                   {}
                   <Form.Group className="mb-3">
-                    <Form.Label className="small fw-bold" style={{ color: '#dfb15b' }}>EMAIL ADDRESS (மின்னஞ்சல் முகவரி)</Form.Label>
+                    <Form.Label className="small fw-bold" style={{ color: '#dfb15b'}}>EMAIL ADDRESS (மின்னஞ்சல் முகவரி)</Form.Label>
                     <Form.Control 
                       type="email" 
                       name="email"
                       placeholder="yourname@gmail.com" 
                       value={formData.email} 
-                      onChange={handleChange} 
+                      onChange={handleChange}
+                      className="custom-placeholder"  
                       required 
                       style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
                     />
@@ -295,7 +298,8 @@ function Contact() {
                       name="subject"
                       placeholder="e.g. Partnership, Volunteering query" 
                       value={formData.subject} 
-                      onChange={handleChange} 
+                      onChange={handleChange}
+                      className="custom-placeholder"  
                       required 
                       style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
                     />
@@ -311,6 +315,7 @@ function Contact() {
                       placeholder="Write your thoughts here..." 
                       value={formData.message} 
                       onChange={handleChange} 
+                      className="custom-placeholder" 
                       required 
                       style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b' }} 
                     />

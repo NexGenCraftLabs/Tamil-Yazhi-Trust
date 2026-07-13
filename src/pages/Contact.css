@@ -1,0 +1,4 @@
+.custom-placeholder::placeholder {
+  color: #a08040; /* Change this to your desired color */
+  opacity: 1;    /* Needed for Firefox to apply the color correctly */
+}

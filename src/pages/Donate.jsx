@@ -91,7 +91,7 @@ function Donate() {
 
             
             <Card className="border-0 shadow-lg text-white mb-4" style={{ backgroundColor: '#250407', border: '1px solid #dfb15b', borderRadius: '15px' }}>
-              <Card.Body className="p-4" style={{ background: 'linear-gradient(180deg, #32080c, #1f0305)' }}>
+              <Card.Body className="p-4" style={{ background: 'linear-gradient(180deg, #1a0204, #8a0811)' }}>
                 <h4 className="font-cinzel fw-bold mb-3" style={{ color: '#dfb15b' }}>📱 Scan & Pay via UPI</h4>
                 <Row className="align-items-center g-3">
                   <Col xs={12} sm={5} className="d-flex justify-content-center">
@@ -111,11 +111,11 @@ function Donate() {
                     <p className="small mb-2" style={{ color: '#f7e7c4', lineHeight: '1.5' }}>
                       Scan the QR code with any UPI app (GPay, PhonePe, Paytm) to make an instant contribution.
                     </p>
-                    <div className="p-2.5 rounded text-start" style={{ backgroundColor: '#1a0204', border: '1px dashed #dfb15b' }}>
-                      <span className="small text-muted d-block" style={{ fontSize: '0.75rem' }}>UPI ID:</span>
+                    <div className="p-2.5 rounded text-start" style={{ backgroundColor: '#ffffff', border: '1px dashed #dfb15b' }}>
+                      <span className="small text-muted d-block" style={{ fontSize: '0.75rem', color:'#ffffff' }}>UPI ID:</span>
                       <strong style={{ color: '#dfb15b', fontSize: '1rem', letterSpacing: '0.5px' }}>tamilyazhitrust@okicici</strong>
                     </div>
-                    <div className="mt-3 p-2 rounded d-flex align-items-center" style={{ backgroundColor: '#db0e1f', fontSize: '0.9rem' }}>
+                    <div className="mt-3 p-2 rounded d-flex align-items-center" style={{ backgroundColor: '#db0e1f  ', fontSize: '0.9rem' }}>
                       <PhoneFill />
                       <div>
                         <span className="d-block small text-white-50">GPay / PhonePe:</span>
@@ -129,26 +129,27 @@ function Donate() {
 
             
             <Card className="border-0 shadow-lg text-white" style={{ backgroundColor: '#250407', border: '1px solid #dfb15b', borderRadius: '15px' }}>
-              <Card.Body className="p-4" style={{ background: 'linear-gradient(180deg, #32080c, #1f0305)' }}>
+              <Card.Body className="p-4" style={{ background: 'linear-gradient(180deg, #1a0204, #9b0909)' }}>
                 <h4 className="font-cinzel fw-bold mb-3" style={{ color: '#dfb15b' }}>🏦 Direct Bank Transfer</h4>
                 <div style={{ borderBottom: '1px dashed rgba(223, 177, 91, 0.3)', paddingBottom: '12px' }} className="mb-3 small">
                   Transfer directly to our official trust bank account using Net Banking, IMPS, NEFT, or RTGS.
                 </div>
                 
                 <Row className="g-3 small">
-                  <Col xs={5} className="text-muted fw-bold">ACCOUNT NAME:</Col>
+                  
+                  <Col xs={5} className="fw-bold" style={{ color: '#ffefc2' }}>ACCOUNT NAME:</Col>
                   <Col xs={7} className="fw-semibold text-white">Tamil yazhi trust</Col>
 
-                  <Col xs={5} className="text-muted fw-bold">ACCOUNT NUMBER:</Col>
+                  <Col xs={5} className="fw-bold" style={{ color: '#ffefc2' }}>ACCOUNT NUMBER:</Col>
                   <Col xs={7} className="fw-bold" style={{ color: '#dfb15b', letterSpacing: '0.5px' }}>50200071637422</Col>
 
-                  <Col xs={5} className="text-muted fw-bold">IFSC CODE:</Col>
+                  <Col xs={5} className="fw-bold" style={{ color: '#ffefc2' }}>IFSC CODE:</Col>
                   <Col xs={7} className="fw-bold" style={{ color: '#dfb15b', letterSpacing: '0.5px' }}>HDFC0009560</Col>
 
-                  <Col xs={5} className="text-muted fw-bold">BANK NAME:</Col>
+                  <Col xs={5} className="fw-bold" style={{ color: '#ffefc2' }}>BANK NAME:</Col>
                   <Col xs={7} className="fw-semibold text-white">HDFC BANK</Col>
 
-                  <Col xs={5} className="text-muted fw-bold">BRANCH:</Col>
+                  <Col xs={5} className="fw-bold" style={{ color: '#ffefc2' }}>BRANCH:</Col>
                   <Col xs={7} className="fw-semibold text-white">THURAIYUR BRANCH</Col>
                 </Row>
               </Card.Body>
@@ -174,6 +175,7 @@ function Donate() {
                     <Form.Control 
                       type="text" 
                       placeholder="Enter your name" 
+                      className="custom-placeholder" 
                       value={name} 
                       onChange={(e) => setName(e.target.value)} 
                       required 
@@ -189,6 +191,7 @@ function Donate() {
                         <Form.Control 
                           type="email" 
                           placeholder="yourname@gmail.com" 
+                          className="custom-placeholder" 
                           value={email} 
                           onChange={(e) => setEmail(e.target.value)} 
                           required 
@@ -203,6 +206,7 @@ function Donate() {
                         <Form.Control 
                           type="tel" 
                           placeholder="Enter mobile number" 
+                          className="custom-placeholder" 
                           value={phone} 
                           onChange={(e) => setPhone(e.target.value)} 
                           required 
@@ -220,6 +224,7 @@ function Donate() {
                         <Form.Control 
                           type="number" 
                           placeholder="e.g. 1000" 
+                          className="custom-placeholder" 
                           value={amount} 
                           onChange={(e) => setAmount(e.target.value)} 
                           required 
@@ -253,6 +258,7 @@ function Donate() {
                     <Form.Control 
                       type="text" 
                       placeholder="Enter GPay, PhonePe, or Bank UPI Ref ID" 
+                      className="custom-placeholder" 
                       value={txId} 
                       onChange={(e) => setTxId(e.target.value)} 
                       required 

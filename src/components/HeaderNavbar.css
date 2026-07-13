@@ -11,6 +11,7 @@
   background-color: var(--trust-gold-bg);
   color: var(--trust-text-dark);
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  background-image: url('header-background1.png');
 }
 
 .trust-title-ta {

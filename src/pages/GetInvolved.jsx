@@ -223,6 +223,7 @@ function GetInvolved() {
                   <Form.Control 
                     type="text" 
                     placeholder="உதாரணம்: பசுமை அறக்கட்டளை" 
+                    className="custom-placeholder" 
                     value={orgName} 
                     onChange={(e) => setOrgName(e.target.value)} 
                     required 
@@ -236,6 +237,7 @@ function GetInvolved() {
                   <Form.Control 
                     type="text" 
                     placeholder="முழு பெயர்" 
+                    className="custom-placeholder" 
                     value={contactName} 
                     onChange={(e) => setContactName(e.target.value)} 
                     required 
@@ -249,6 +251,7 @@ function GetInvolved() {
                   <Form.Control 
                     type="email" 
                     placeholder="partner@company.com" 
+                    className="custom-placeholder" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                     required 
@@ -262,6 +265,7 @@ function GetInvolved() {
                   <Form.Control 
                     type="url" 
                     placeholder="https://yourwebsite.com" 
+                    className="custom-placeholder" 
                     value={website} 
                     onChange={(e) => setWebsite(e.target.value)} 
                     style={{ backgroundColor: '#1a0204', color: '#f7e7c4', border: '1px solid #dfb15b' }} 

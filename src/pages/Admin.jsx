@@ -410,6 +410,7 @@ function Admin() {
                       <Form.Control 
                         type="email" 
                         placeholder="Admin Email" 
+                        className="custom-placeholder" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -422,6 +423,7 @@ function Admin() {
                       <Form.Control 
                         type="password" 
                         placeholder="Enter password" 
+                        className="custom-placeholder" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
