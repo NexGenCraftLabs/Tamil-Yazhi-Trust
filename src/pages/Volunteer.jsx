@@ -195,6 +195,7 @@ function Volunteer() {
                           type="text" 
                           name="name"
                           placeholder="Your Answer" 
+                          className="custom-placeholder" 
                           value={formData.name}
                           onChange={handleChange}
                           required
@@ -210,6 +211,7 @@ function Volunteer() {
                           type="text" 
                           name="fatherName"
                           placeholder="Father's / Guardian's Name" 
+                          className="custom-placeholder" 
                           value={formData.fatherName}
                           onChange={handleChange}
                           required
@@ -228,6 +230,7 @@ function Volunteer() {
                           type="text" 
                           name="aadhaar"
                           placeholder="12 Digit Aadhaar Number" 
+                          className="custom-placeholder" 
                           maxLength={12}
                           value={formData.aadhaar}
                           onChange={(e) => {
@@ -288,6 +291,7 @@ function Volunteer() {
                           type="date" 
                           name="dob"
                           value={formData.dob}
+                          className="custom-placeholder" 
                           onChange={handleChange}
                           required
                           style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b', borderRadius: '8px' }} 
@@ -302,6 +306,7 @@ function Volunteer() {
                           type="text" 
                           name="district"
                           placeholder="e.g. Trichy, Chennai" 
+                          className="custom-placeholder" 
                           value={formData.district}
                           onChange={handleChange}
                           required
@@ -323,6 +328,7 @@ function Volunteer() {
                           type="email" 
                           name="email"
                           placeholder="name@gmail.com" 
+                          className="custom-placeholder" 
                           value={formData.email}
                           onChange={handleChange}
                           required
@@ -339,7 +345,8 @@ function Volunteer() {
                         <Form.Control 
                           type="tel" 
                           name="phone"
-                          placeholder="9876543210" 
+                          placeholder="Enter Phone Number" 
+                          className="custom-placeholder" 
                           value={formData.phone}
                           onChange={handleChange}
                           required
@@ -354,7 +361,8 @@ function Volunteer() {
                         <Form.Control 
                           type="tel" 
                           name="whatsapp"
-                          placeholder="Same as mobile or other" 
+                          placeholder="Enter Your Whatsapp Number" 
+                          className="custom-placeholder" 
                           value={formData.whatsapp}
                           onChange={handleChange}
                           style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b', borderRadius: '8px' }} 
@@ -374,6 +382,7 @@ function Volunteer() {
                         <Form.Control 
                           type="text" 
                           name="education"
+                          className="custom-placeholder" 
                           placeholder="e.g. B.Sc Psychology, Class 12" 
                           value={formData.education}
                           onChange={handleChange}
@@ -389,6 +398,7 @@ function Volunteer() {
                           type="text" 
                           name="occupation"
                           placeholder="e.g. Student, Software Engineer" 
+                          className="custom-placeholder" 
                           value={formData.occupation}
                           onChange={handleChange}
                           style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b', borderRadius: '8px' }} 
@@ -441,6 +451,7 @@ function Volunteer() {
                       rows={2} 
                       name="experience"
                       placeholder="Share your past experience with other NGOs or campaigns..." 
+                      className="custom-placeholder" 
                       value={formData.experience}
                       onChange={handleChange}
                       style={{ backgroundColor: '#250407', color: '#f7e7c4', border: '1px solid #dfb15b', borderRadius: '8px' }} 
@@ -454,6 +465,7 @@ function Volunteer() {
                       rows={3} 
                       name="message"
                       placeholder="Your Answer" 
+                      className="custom-placeholder" 
                       value={formData.message}
                       onChange={handleChange}
                       required
