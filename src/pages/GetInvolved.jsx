@@ -114,7 +114,7 @@ function GetInvolved() {
                   className="w-100 font-cinzel fw-bold border-0 mt-3 py-2.5 text-black"
                   style={{ backgroundColor: '#dfb15b', borderRadius: '25px' }}
                 >
-                  Donate Now 💖
+                  Donate Now
                 </Button>
               </Card.Body>
             </Card>
